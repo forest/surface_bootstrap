@@ -13,7 +13,11 @@ defmodule SurfaceBootstrap.Form do
   def field_has_change?(%{source: atom}, _field) when is_atom(atom), do: false
 
   def field_has_change?(form, field) do
-    !is_nil(Ecto.Changeset.get_change(form.source, field, false))
+    field_value =
+      Ecto.Changeset.get_change(form.source, field, nil) ||
+        Map.get(form.params, to_string(field), nil)
+
+    !change_blank?(field_value)
   end
 
   def render(assigns) do
@@ -21,4 +25,8 @@ defmodule SurfaceBootstrap.Form do
 
     """
   end
+
+  defp change_blank?(""), do: true
+  defp change_blank?(nil), do: true
+  defp change_blank?(_), do: false
 end
