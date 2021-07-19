@@ -115,7 +115,7 @@ defmodule SurfaceBootstrap.Form.InputBase do
     [
       "form-control",
       form_size(assigns[:size]),
-      "is-invalid": has_change?(assigns) && has_error?(assigns),
+      "is-invalid": has_error?(assigns),
       "is-valid": has_change?(assigns) && !has_error?(assigns),
       "form-control-plaintext": assigns[:readonly] && assigns[:readonly_plaintext]
     ]
